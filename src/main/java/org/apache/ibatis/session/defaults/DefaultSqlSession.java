@@ -137,6 +137,7 @@ public class DefaultSqlSession implements SqlSession {
 
   @Override
   public <E> List<E> selectList(String statement, Object parameter) {
+    // RowBounds 查询范围器offset=0,limit
     return this.selectList(statement, parameter, RowBounds.DEFAULT);
   }
 
@@ -147,7 +148,9 @@ public class DefaultSqlSession implements SqlSession {
 
   private <E> List<E> selectList(String statement, Object parameter, RowBounds rowBounds, ResultHandler handler) {
     try {
+      // 获取SQL映射
       MappedStatement ms = configuration.getMappedStatement(statement);
+      // 委托Executor执行
       return executor.query(ms, wrapCollection(parameter), rowBounds, handler);
     } catch (Exception e) {
       throw ExceptionFactory.wrapException("Error querying database.  Cause: " + e, e);

@@ -24,8 +24,10 @@ import java.util.List;
  */
 public class InterceptorChain {
 
+  // 拦截器
   private final List<Interceptor> interceptors = new ArrayList<>();
 
+  // 调用每个拦截器的plugin方法，生成代理类
   public Object pluginAll(Object target) {
     for (Interceptor interceptor : interceptors) {
       target = interceptor.plugin(target);

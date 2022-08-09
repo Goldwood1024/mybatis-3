@@ -29,31 +29,49 @@ import org.apache.ibatis.scripting.LanguageDriver;
 import org.apache.ibatis.session.Configuration;
 
 /**
+ * 包装了mybatis配置信息及sql映射信息
+ * 描述<select|update|insert|delete>或者@Select、@Update等注解配置的SQL信息
  * @author Clinton Begin
  */
 public final class MappedStatement {
 
+  // mapper配置文件名
   private String resource;
   private Configuration configuration;
+  // 节点的id属性加命名空间
   private String id;
+  // 用于设置JDBC中Statement对象的fetchSize属性，该属性用于指定SQL执行后返回的最大行数
   private Integer fetchSize;
+  // 驱动程序等待数据库返回请求结果的秒数，超时将会抛出异常
   private Integer timeout;
+  // 操作SQL的对象的类型 STATEMENT, PREPARED, CALLABLE
   private StatementType statementType;
+  // 结果类型
   private ResultSetType resultSetType;
+  // sql语句
   private SqlSource sqlSource;
+  // 缓存
   private Cache cache;
+  // 引用通过<parameterMap>标签定义的参数映射
   private ParameterMap parameterMap;
+  // 用于引用通过<resultMap>标签配置的实体属性与数据库字段之间建立的结果集的映射
   private List<ResultMap> resultMaps;
+  // 用于控制是否刷新缓存
   private boolean flushCacheRequired;
+  // 是否使用二级缓存 默认值为true
   private boolean useCache;
+  // 结果是否排序
   private boolean resultOrdered;
+  // ql语句的类型 INSERT, UPDATE, DELETE, SELECT, FLUSH
   private SqlCommandType sqlCommandType;
   private KeyGenerator keyGenerator;
   private String[] keyProperties;
   private String[] keyColumns;
   private boolean hasNestedResultMaps;
+  // 数据库ID
   private String databaseId;
   private Log statementLog;
+  // 驱动类
   private LanguageDriver lang;
   private String[] resultSets;
 
@@ -72,13 +90,16 @@ public final class MappedStatement {
       mappedStatement.resultSetType = ResultSetType.DEFAULT;
       mappedStatement.parameterMap = new ParameterMap.Builder(configuration, "defaultParameterMap", null, new ArrayList<>()).build();
       mappedStatement.resultMaps = new ArrayList<>();
+      // UNKNOWN, INSERT, UPDATE, DELETE, SELECT, FLUSH
       mappedStatement.sqlCommandType = sqlCommandType;
+      // 主键生成器
       mappedStatement.keyGenerator = configuration.isUseGeneratedKeys() && SqlCommandType.INSERT.equals(sqlCommandType) ? Jdbc3KeyGenerator.INSTANCE : NoKeyGenerator.INSTANCE;
       String logId = id;
       if (configuration.getLogPrefix() != null) {
         logId = configuration.getLogPrefix() + id;
       }
       mappedStatement.statementLog = LogFactory.getLog(logId);
+      // 驱动类
       mappedStatement.lang = configuration.getDefaultScriptingLanguageInstance();
     }
 

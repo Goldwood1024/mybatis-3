@@ -33,6 +33,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
 /**
+ * 对应JDBC中常用的Statement接口，用于简单SQL的处理
  * @author Clinton Begin
  */
 public class SimpleStatementHandler extends BaseStatementHandler {
@@ -70,8 +71,11 @@ public class SimpleStatementHandler extends BaseStatementHandler {
 
   @Override
   public <E> List<E> query(Statement statement, ResultHandler resultHandler) throws SQLException {
+    // 实际执行的SQL
     String sql = boundSql.getSql();
+    // 执行数据库查询，调用数据库驱动类
     statement.execute(sql);
+    // 解析查询结果
     return resultSetHandler.handleResultSets(statement);
   }
 

@@ -33,6 +33,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
 /**
+ * JDBC中的PreparedStatement，预编译SQL的接口
  * @author Clinton Begin
  */
 public class PreparedStatementHandler extends BaseStatementHandler {

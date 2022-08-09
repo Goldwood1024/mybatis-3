@@ -27,6 +27,7 @@ import org.apache.ibatis.session.ResultHandler;
  */
 public class DefaultResultHandler implements ResultHandler<Object> {
 
+  // 保存查询结果
   private final List<Object> list;
 
   public DefaultResultHandler() {

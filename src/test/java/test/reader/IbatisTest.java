@@ -51,4 +51,26 @@ public class IbatisTest {
     System.out.println(list);
     sqlSession.close();
   }
+
+  @Test
+  public void testInsert() throws Exception {
+    String id = "testInsert";
+    Configuration configuration = getConfiguration();
+
+    ResultMap resultMap = new ResultMap.Builder(configuration, id, Demo.class, new ArrayList<>()).build();
+
+    SqlSource sqlSource = new StaticSqlSource(configuration, "insert into local_mock.demo(name) value ('123')");
+    MappedStatement statement = new MappedStatement
+      .Builder(configuration, id, sqlSource, SqlCommandType.INSERT)
+      .useCache(false)
+      .resultMaps(Lists.newArrayList(resultMap))
+      .build();
+    configuration.addMappedStatement(statement);
+
+    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+
+    sqlSession.insert(id);
+    sqlSession.close();
+  }
 }

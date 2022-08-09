@@ -27,6 +27,7 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 
 /**
+ * 用于数据库不支持自增主键的情况
  * @author Clinton Begin
  * @author Jeff Butler
  */

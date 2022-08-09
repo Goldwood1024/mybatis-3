@@ -26,6 +26,7 @@ import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.session.ResultHandler;
 
 /**
+ * StatementHandler负责处理Mybatis与JDBC之间Statement的交互
  * @author Clinton Begin
  */
 public interface StatementHandler {

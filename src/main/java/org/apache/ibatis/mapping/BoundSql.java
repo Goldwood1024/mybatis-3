@@ -15,13 +15,13 @@
  */
 package org.apache.ibatis.mapping;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.property.PropertyTokenizer;
 import org.apache.ibatis.session.Configuration;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * An actual SQL String got from an {@link SqlSource} after having processed any dynamic content.
@@ -30,13 +30,18 @@ import org.apache.ibatis.session.Configuration;
  * the value from).
  * <p>
  * Can also have additional parameters that are created by the dynamic language (for loops, bind...).
+ * <p>
+ * BoundSql的作用是保存Sql
  *
  * @author Clinton Begin
  */
 public class BoundSql {
 
+  // ${} 和 #{} 替换为占位符的sql，每个 #{} 替换完之后就是一个占位符 ?
   private final String sql;
+  // 保存 sql 中的 #{}，包括其属性、名称等，和替换为占位符 ? 一一对应
   private final List<ParameterMapping> parameterMappings;
+  // 保存用户传入的数据
   private final Object parameterObject;
   private final Map<String, Object> additionalParameters;
   private final MetaObject metaParameters;

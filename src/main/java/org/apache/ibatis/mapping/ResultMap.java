@@ -32,22 +32,32 @@ import org.apache.ibatis.reflection.ParamNameUtil;
 import org.apache.ibatis.session.Configuration;
 
 /**
+ * resultMap 的设计思想是，对简单的语句做到零配置，对于复杂一点的语句，只需要描述语句之间的关系就行
  * @author Clinton Begin
  */
 public class ResultMap {
   private Configuration configuration;
 
+  // 唯一标识，此 id 值用于 <select> 元素 resultMap 属性的引用
   private String id;
+  // 实体类型
   private Class<?> type;
+  // 实体和字段映射关系
   private List<ResultMapping> resultMappings;
+  // 主键映射关系
   private List<ResultMapping> idResultMappings;
+  // 构造方法映射关系
   private List<ResultMapping> constructorResultMappings;
   private List<ResultMapping> propertyResultMappings;
+  // 映射的列名
   private Set<String> mappedColumns;
+  // 映射的属性名
   private Set<String> mappedProperties;
+  // 鉴别器 对查询的结果进行分支处理
   private Discriminator discriminator;
   private boolean hasNestedResultMaps;
   private boolean hasNestedQueries;
+  // 完成结果集的映射，在映射时会将resultMapping中的字段按照名称相同的方式映射到返回类型的对应属性上，在映射时会自动忽略大小写
   private Boolean autoMapping;
 
   private ResultMap() {

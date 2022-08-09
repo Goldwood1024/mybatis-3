@@ -92,10 +92,12 @@ public class XMLConfigBuilder extends BaseBuilder {
   }
 
   public Configuration parse() {
+    // 判断是否已经解析过
     if (parsed) {
       throw new BuilderException("Each XMLConfigBuilder can only be used once.");
     }
     parsed = true;
+    // configuration 根节点
     parseConfiguration(parser.evalNode("/configuration"));
     return configuration;
   }
@@ -103,20 +105,34 @@ public class XMLConfigBuilder extends BaseBuilder {
   private void parseConfiguration(XNode root) {
     try {
       // issue #117 read properties first
+      // 分步骤解析
+      // 解析properties
       propertiesElement(root.evalNode("properties"));
+      // 读取设置
       Properties settings = settingsAsProperties(root.evalNode("settings"));
       loadCustomVfs(settings);
+      // 日志类
       loadCustomLogImpl(settings);
+      // 类型别名
       typeAliasesElement(root.evalNode("typeAliases"));
+      // 插件
       pluginElement(root.evalNode("plugins"));
+      // 对象工厂
       objectFactoryElement(root.evalNode("objectFactory"));
+      // 对象包装工厂
       objectWrapperFactoryElement(root.evalNode("objectWrapperFactory"));
+      // 反射工厂
       reflectorFactoryElement(root.evalNode("reflectorFactory"));
+      // 初始化设置
       settingsElement(settings);
       // read it after objectFactory and objectWrapperFactory issue #631
+      // 环境
       environmentsElement(root.evalNode("environments"));
+      // databaseIdProvider
       databaseIdProviderElement(root.evalNode("databaseIdProvider"));
+      // 类型处理器
       typeHandlerElement(root.evalNode("typeHandlers"));
+      // 映射器
       mapperElement(root.evalNode("mappers"));
     } catch (Exception e) {
       throw new BuilderException("Error parsing SQL Mapper Configuration. Cause: " + e, e);

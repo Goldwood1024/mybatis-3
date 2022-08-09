@@ -15,12 +15,14 @@
  */
 package org.apache.ibatis.executor.keygen;
 
-import java.sql.Statement;
-
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 
+import java.sql.Statement;
+
 /**
+ * 默认空实现，不对主键单独处理
+ *
  * @author Clinton Begin
  * @author Kazuki Shimizu
  */

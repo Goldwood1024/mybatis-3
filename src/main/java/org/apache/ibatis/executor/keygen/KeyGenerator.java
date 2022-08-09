@@ -15,18 +15,22 @@
  */
 package org.apache.ibatis.executor.keygen;
 
-import java.sql.Statement;
-
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
+
+import java.sql.Statement;
 
 /**
  * @author Clinton Begin
  */
 public interface KeyGenerator {
 
+  // 针对Sequence主键而言，在执行insert sql前必须指定一个主键值给要插入的记录
+  // Oracle、DB2
   void processBefore(Executor executor, MappedStatement ms, Statement stmt, Object parameter);
 
+  // 针对自增主键的表，在插入时不需要主键，而是在插入过程自动获取一个自增的主键
+  // MySQL，Postgresql
   void processAfter(Executor executor, MappedStatement ms, Statement stmt, Object parameter);
 
 }

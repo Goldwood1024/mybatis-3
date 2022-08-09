@@ -69,6 +69,7 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 import org.apache.ibatis.util.MapUtil;
 
 /**
+ * ResultSetHandler 默认实现类
  * @author Clinton Begin
  * @author Eduardo Macarron
  * @author Iwao AVE!
@@ -188,16 +189,22 @@ public class DefaultResultSetHandler implements ResultSetHandler {
   public List<Object> handleResultSets(Statement stmt) throws SQLException {
     ErrorContext.instance().activity("handling results").object(mappedStatement.getId());
 
+    // 实际的结果集
     final List<Object> multipleResults = new ArrayList<>();
 
     int resultSetCount = 0;
+
+    // 结果集的第一个结果
     ResultSetWrapper rsw = getFirstResultSet(stmt);
 
+    // ResultMap集合
     List<ResultMap> resultMaps = mappedStatement.getResultMaps();
     int resultMapCount = resultMaps.size();
+    // 检验ResultMap个数, 必须包含 <resultMap>
     validateResultMapsCount(rsw, resultMapCount);
     while (rsw != null && resultMapCount > resultSetCount) {
       ResultMap resultMap = resultMaps.get(resultSetCount);
+      // 根据resultMap处理rsw生成java对象
       handleResultSet(rsw, resultMap, multipleResults, null);
       rsw = getNextResultSet(stmt);
       cleanUpAfterHandlingResultSet();
@@ -358,7 +365,9 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     skipRows(resultSet, rowBounds);
     while (shouldProcessMoreRows(resultContext, rowBounds) && !resultSet.isClosed() && resultSet.next()) {
       ResultMap discriminatedResultMap = resolveDiscriminatedResultMap(resultSet, resultMap, null);
+      // 获取字段值
       Object rowValue = getRowValue(rsw, discriminatedResultMap, null);
+      // 保存值
       storeObject(resultHandler, resultContext, rowValue, parentMapping, resultSet);
     }
   }

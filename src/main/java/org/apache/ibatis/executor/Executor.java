@@ -28,6 +28,13 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.transaction.Transaction;
 
 /**
+ * 执行器
+ * SqlSession执行增删改查都是委托给Executor完成
+ * 处理缓存，包括一级缓存和二级缓存
+ * 获取数据库连接
+ * 创建Statement或者PrepareStatement对象
+ * 访问数据库执行SQL语句
+ * 处理数据库返回结果
  * @author Clinton Begin
  */
 public interface Executor {

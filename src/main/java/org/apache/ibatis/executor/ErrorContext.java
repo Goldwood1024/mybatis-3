@@ -16,19 +16,28 @@
 package org.apache.ibatis.executor;
 
 /**
+ * 日志记录器
+ *
  * @author Clinton Begin
  */
 public class ErrorContext {
 
+  // 换行符
   private static final String LINE_SEPARATOR = System.lineSeparator();
   private static final ThreadLocal<ErrorContext> LOCAL = ThreadLocal.withInitial(ErrorContext::new);
 
   private ErrorContext stored;
+  // 存储异常存在于哪个资源文件中
   private String resource;
+  // 存储异常是做什么操作时发生的
   private String activity;
+  // 存储哪个对象操作时发生异常
   private String object;
+  // 存储异常的概览信息
   private String message;
+  // 存储发生日常的 SQL 语句
   private String sql;
+  // 存储详细的 Java 异常
   private Throwable cause;
 
   private ErrorContext() {

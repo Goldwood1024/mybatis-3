@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+  <!-- 一些全局配置属性，会改变MyBatis的运行时行为 -->
+  <settings>
+    <setting name="cacheEnabled" value="true"/>
+    <setting name="lazyLoadingEnabled" value="true"/>
+    <setting name="multipleResultSetsEnabled" value="true"/>
+    <setting name="useColumnLabel" value="true"/>
+    <setting name="useGeneratedKeys" value="false"/>
+    <setting name="autoMappingBehavior" value="PARTIAL"/>
+    <setting name="defaultExecutorType" value="SIMPLE"/>
+    <setting name="defaultStatementTimeout" value="25"/>
+    <setting name="defaultFetchSize" value="100"/>
+    <setting name="safeRowBoundsEnabled" value="false"/>
+    <setting name="mapUnderscoreToCamelCase" value="false"/>
+    <setting name="localCacheScope" value="SESSION"/>
+    <setting name="jdbcTypeForNull" value="OTHER"/>
+    <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
+  </settings>
+
+  <!-- 类型别名: 为Java类型设置一个短的名字 -->
+  <typeAliases>
+    <package name="com.learn.mybatis.learnmybatis"/>
+  </typeAliases>
+
+  <!-- 插件 -->
+  <plugins>
+    <plugin interceptor="com.learn.mybatis.learnmybatis.plugins.SqlDetailPlugin"/>
+  </plugins>
+
+  <!-- 当前的环境，可以配置多个环境，但是在运行的时候，只能有一个起作用，就是在default中配置的 -->
+  <environments default="development">
+    <!-- 当前的环境是development，其中包含了事务管理 和 数据库源 -->
+    <environment id="development">
+      <!-- 事务管理器类型是JDBC 也可以是MANAGED -->
+      <transactionManager type="JDBC"/>
+      <!-- 数据库源 支持UNPOOLED|POOLED|JNDI，当前是POOLED表示是连接池 -->
+      <dataSource type="POOLED">
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://47.100.34.169:3306/data-dev?serverTimezone=UTC "/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+      </dataSource>
+    </environment>
+  </environments>
+
+  <!-- mapper的映射 -->
+  <mappers>
+    <!-- 支持url，class，resource -->
+    <mapper resource="mapper/IUserMapper.xml"/>
+  </mappers>
+</configuration>
