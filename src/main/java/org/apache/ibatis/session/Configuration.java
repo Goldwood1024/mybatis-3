@@ -81,6 +81,7 @@ import java.util.function.BiFunction;
  */
 public class Configuration {
 
+  // Mapper 注册器
   protected final MapperRegistry mapperRegistry = new MapperRegistry(this);
   // 拦截器链
   protected final InterceptorChain interceptorChain = new InterceptorChain();
@@ -90,6 +91,7 @@ public class Configuration {
   protected final Map<String, MappedStatement> mappedStatements = new StrictMap<MappedStatement>("Mapped Statements collection")
     .conflictMessageProducer((savedValue, targetValue) ->
       ". please check " + savedValue.getResource() + " and " + targetValue.getResource());
+  // 缓存集合
   protected final Map<String, Cache> caches = new StrictMap<>("Caches collection");
   protected final Map<String, ResultMap> resultMaps = new StrictMap<>("Result Maps collection");
   protected final Map<String, ParameterMap> parameterMaps = new StrictMap<>("Parameter Maps collection");
@@ -603,6 +605,7 @@ public class Configuration {
 
   public void setDefaultScriptingLanguage(Class<? extends LanguageDriver> driver) {
     if (driver == null) {
+      // 默认 XMLLanguageDriver
       driver = XMLLanguageDriver.class;
     }
     getLanguageRegistry().setDefaultDriverClass(driver);

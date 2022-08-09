@@ -35,6 +35,7 @@ public interface LanguageDriver {
    * @return the parameter handler
    * @see DefaultParameterHandler
    */
+  // 创建参数映射
   ParameterHandler createParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql);
 
   /**
@@ -46,6 +47,7 @@ public interface LanguageDriver {
    * @param parameterType input parameter type got from a mapper method or specified in the parameterType xml attribute. Can be null.
    * @return the sql source
    */
+  // 创建数据源
   SqlSource createSqlSource(Configuration configuration, XNode script, Class<?> parameterType);
 
   /**
@@ -57,6 +59,7 @@ public interface LanguageDriver {
    * @param parameterType input parameter type got from a mapper method or specified in the parameterType xml attribute. Can be null.
    * @return the sql source
    */
+  // 创建数据源
   SqlSource createSqlSource(Configuration configuration, String script, Class<?> parameterType);
 
 }

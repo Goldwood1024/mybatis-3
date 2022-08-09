@@ -29,6 +29,7 @@ import org.apache.ibatis.scripting.defaults.RawSqlSource;
 import org.apache.ibatis.session.Configuration;
 
 /**
+ * XMLLanguageDriver 动态SQL语言驱动
  * @author Eduardo Macarron
  */
 public class XMLLanguageDriver implements LanguageDriver {
@@ -40,7 +41,9 @@ public class XMLLanguageDriver implements LanguageDriver {
 
   @Override
   public SqlSource createSqlSource(Configuration configuration, XNode script, Class<?> parameterType) {
+    // xml 脚本构建
     XMLScriptBuilder builder = new XMLScriptBuilder(configuration, script, parameterType);
+    // 转换
     return builder.parseScriptNode();
   }
 

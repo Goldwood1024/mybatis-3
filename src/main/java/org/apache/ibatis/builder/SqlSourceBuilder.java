@@ -47,6 +47,7 @@ public class SqlSourceBuilder extends BaseBuilder {
     if (configuration.isShrinkWhitespacesInSql()) {
       sql = parser.parse(removeExtraWhitespaces(originalSql));
     } else {
+      // #{} 替换成 ?
       sql = parser.parse(originalSql);
     }
     return new StaticSqlSource(configuration, sql, handler.getParameterMappings());
